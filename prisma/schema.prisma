@@ -9,3 +9,43 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Stack {
+  id String @id @default(uuid())
+  stack String
+  logo String
+}
+
+model Experience{
+  id String @id @default(uuid())
+  year DateTime
+  job String
+  company String
+  description String
+  beginDate DateTime
+  finishDate DateTime
+  town String
+  country String
+  logo String
+}
+
+model Education{
+  id String @id @default(uuid())
+  year DateTime
+  school String
+  education String
+  description String
+  beginDate DateTime
+  finishDate DateTime
+  logo String
+}
+
+model Interest {
+  id String @id @default(uuid())
+  interest String
+}
+
+model Language {
+  id String @id @default(uuid())
+  language String
+}
