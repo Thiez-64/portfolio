@@ -10,8 +10,8 @@ export default function NavBar(): JSX.Element {
     setIsMenu((previousState) => !previousState);
   };
   return (
-    <div className="flex items-center w-full justify-around">
-      <div className="w-14">
+    <div className="flex items-center w-full justify-around bg-blue-700">
+      <div className="w-1/12 rounded-full justify-center items-center m-1">
         <button onClick={handleClick}>
           <a>
             <Link href="/menupage" passHref>
@@ -25,10 +25,10 @@ export default function NavBar(): JSX.Element {
           </a>
         </button>
       </div>
-      <h1 className="dark:text-red-500">
-        Matthieu O’Jeanson, Web and Mobile Applications Developer
-      </h1>
-      <div className="w-14">
+      <div className="w-10/12 text-white justify-center flex">
+        <h1>Matthieu O’Jeanson, Web and Mobile Applications Developer</h1>
+      </div>
+      <div className="w-1/12 items-center">
         <DarkModeToggle />
       </div>
     </div>
