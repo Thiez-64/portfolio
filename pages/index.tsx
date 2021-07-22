@@ -42,8 +42,21 @@ export default function Home({
         {stacks.map((stack, index) => {
           return (
             <li key={stack.id}>
-              <Image src={stack.logo} alt="logo" width={50} height={50} />
-              <p>{stack.stack}</p>
+              <div className="flex items-center">
+                <div className="m-1">
+                  {stack.logo ? (
+                    <Image src={stack.logo} alt="logo" width={60} height={60} />
+                  ) : (
+                    <Image
+                      src="/placeholder.svg"
+                      alt="placeholder"
+                      width={60}
+                      height={60}
+                    />
+                  )}
+                </div>
+                <p>{stack.stack}</p>
+              </div>
             </li>
           );
         })}
