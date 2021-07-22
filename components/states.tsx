@@ -6,4 +6,9 @@ const darkState = atom({
   default: false,
 });
 
-export { darkState };
+const menuState = atom({
+  key: "menuState",
+  default: false,
+});
+
+export { darkState, menuState };

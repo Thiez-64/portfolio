@@ -4,7 +4,7 @@ function DarkModeToggle(): JSX.Element {
   const { theme, setTheme } = useTheme();
 
   const handlDarkMode = () => {
-    setTheme("");
+    setTheme((previousState) => !previousState);
   };
 
   return (
