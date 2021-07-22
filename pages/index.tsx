@@ -1,10 +1,11 @@
-import { Language, Stack } from "@prisma/client";
+import { Language } from "@prisma/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import DeleteButton from "../components/deletebutton";
 import EditButton from "../components/editbutton";
+import Slider from "../components/slider";
 
 type InputLanguage = {
   language: string;
@@ -15,7 +16,6 @@ export default function Home({
   languages,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   const [langs, setLangs] = useState(languages);
-  const [langsEdit, setLangsEdit] = useState(languages);
 
   const {
     register,
@@ -42,7 +42,7 @@ export default function Home({
       });
   };
 
-  const Edit = async () => {
+  const Edit = async (data) => {
     await fetch("http://localhost:3000/api/languages", {
       method: "PUT",
       headers: {
@@ -53,7 +53,7 @@ export default function Home({
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        setLangsEdit((prev) => [...prev, data]);
+        setLangs((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -67,7 +67,12 @@ export default function Home({
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      // .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        setLangs((prev) => [...prev]);
+      })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -76,19 +81,14 @@ export default function Home({
   return (
     <div>
       <div>
-        <h2>30 Boulevard des plages, 64600 Anglet</h2>
-        <h2>ma.ojeanson@gmail.com</h2>
-        <h2>+33 6 85 78 83 04</h2>
-        <h2>33 ans</h2>
-        <h2>Licence driving</h2>
-        <h2>Word Wild</h2>
+        <Slider />
       </div>
-      <div>
+      <div className="font-bold items-center text-xl">
         <h2>Languages</h2>
         <ul>
           {langs.map((language, index) => {
             return (
-              <li key={language.id}>
+              <li key={language.id} className="text-base">
                 <div className="flex items-center">
                   <div className="m-1">
                     {language.logo ? (
@@ -115,19 +115,32 @@ export default function Home({
             );
           })}
         </ul>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
           {/* register your input into the hook by invoking the "register" function */}
-          <input
-            defaultValue="Language ?"
-            {...register("language", { required: true })}
-          />
+          <div>
+            <input
+              className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
+              defaultValue="Language ?"
+              {...register("language", { required: true })}
+            />
+          </div>
 
           {/* include validation with required or other standard HTML validation rules */}
-          <input defaultValue="Logo ?" {...register("logo")} />
-          {/* errors will return when field validation fails  */}
-          {errors.language && <span>This field is required</span>}
-
-          <input type="submit" />
+          <div>
+            <input
+              className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
+              defaultValue="Logo ?"
+              {...register("logo")}
+            />
+            {/* errors will return when field validation fails  */}
+            {errors.language && <span>This field is required</span>}
+          </div>
+          <div>
+            <input
+              className="p-2 bg-blue-700 rounded-md text-white"
+              type="submit"
+            />
+          </div>
         </form>
       </div>
     </div>

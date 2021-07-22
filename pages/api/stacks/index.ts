@@ -35,6 +35,7 @@ export default async function handler(
       const deleteStack = await prisma.stack.delete({
         where: { id },
       });
+      return res.status(204);
     }
   } catch (error) {
     next(error);

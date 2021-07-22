@@ -2,16 +2,20 @@ import { Stack } from "@prisma/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import EditButton from "../components/editbutton";
+import DeleteButton from "../components/deletebutton";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Placeholder from "../public/placeholder.svg";
 
 type InputStack = {
   stack: string;
   logo: string;
 };
 
-export default function Stacks({
+export default function DevStack({
   stacks,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+  const [devStacks, setDevStacks] = useState(stacks);
   const {
     register,
     handleSubmit,
@@ -21,7 +25,7 @@ export default function Stacks({
   const onSubmit: SubmitHandler<InputStack> = async (data) => {
     console.log(data);
     await fetch("http://localhost:3000/api/stacks", {
-      method: "POST", // or 'PUT'
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -30,6 +34,7 @@ export default function Stacks({
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        setDevStacks((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -37,7 +42,7 @@ export default function Stacks({
   };
   console.log(stacks);
   return (
-    <div>
+    <div className="font-bold items-center text-xl">
       <h2>Web Skills</h2>
       <ul>
         {stacks.map((stack, index) => {
@@ -49,7 +54,7 @@ export default function Stacks({
                     <Image src={stack.logo} alt="logo" width={60} height={60} />
                   ) : (
                     <Image
-                      src="/placeholder.svg"
+                      src={Placeholder}
                       alt="placeholder"
                       width={60}
                       height={60}
@@ -58,24 +63,39 @@ export default function Stacks({
                 </div>
                 <p>{stack.stack}</p>
                 <EditButton />
+                <DeleteButton />
               </div>
             </li>
           );
         })}
       </ul>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
         {/* register your input into the hook by invoking the "register" function */}
-        <input
-          defaultValue="Stack ?"
-          {...register("stack", { required: true })}
-        />
+        <div>
+          <input
+            className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
+            defaultValue="Stack ?"
+            {...register("stack", { required: true })}
+          />
+        </div>
 
         {/* include validation with required or other standard HTML validation rules */}
-        <input defaultValue="Logo ?" {...register("logo")} />
+        <div>
+          <input
+            className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
+            defaultValue="Logo ?"
+            {...register("logo")}
+          />
+        </div>
         {/* errors will return when field validation fails  */}
         {errors.stack && <span>This field is required</span>}
 
-        <input type="submit" />
+        <div>
+          <input
+            className="p-2 bg-blue-700 rounded-md text-white"
+            type="submit"
+          />
+        </div>
       </form>
     </div>
   );
