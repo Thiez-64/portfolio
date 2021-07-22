@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
     <RecoilRoot>
       <ThemeProvider>
         <Layout>
-          <Component {...pageProps} />;
+          <Component {...pageProps} />
         </Layout>
       </ThemeProvider>
     </RecoilRoot>
