@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import github from "../public/github.svg";
 import linkedin from "../public/linkedin.svg";
 
@@ -11,10 +12,21 @@ export default function FootBar() {
       </div>
       <div className="flex w-1/12">
         <div className="m-1">
-          <Image src={github} alt="github" width={50} height={50} />
+          <a>
+            <Link href="https://github.com/Thiez-64" passHref>
+              <Image src={github} alt="github" width={50} height={50} />
+            </Link>
+          </a>
         </div>
         <div className="m-1">
-          <Image src={linkedin} alt="linkedin" width={50} height={50} />
+          <a>
+            <Link
+              href="https://www.linkedin.com/in/matthieu-o-jeanson-81a1ba42/"
+              passHref
+            >
+              <Image src={linkedin} alt="linkedin" width={50} height={50} />
+            </Link>
+          </a>
         </div>
       </div>
     </div>
