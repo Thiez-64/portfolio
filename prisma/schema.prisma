@@ -43,9 +43,11 @@ model Education{
 model Interest {
   id String @id @default(uuid())
   interest String
+  logo String
 }
 
 model Language {
   id String @id @default(uuid())
   language String
+  logo String
 }
