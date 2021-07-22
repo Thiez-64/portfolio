@@ -1,8 +1,9 @@
 import { Language, Stack } from "@prisma/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import DeleteButton from "../components/deletebutton";
 import EditButton from "../components/editbutton";
 
 type InputLanguage = {
@@ -59,6 +60,19 @@ export default function Home({
       });
   };
 
+  const Cancel = async (data) => {
+    await fetch("http://localhost:3000/api/languages", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div>
       <div>
@@ -95,6 +109,7 @@ export default function Home({
                   </div>
                   <p>{language.language}</p>
                   <EditButton onClick={Edit} />
+                  <DeleteButton onClick={Cancel} />
                 </div>
               </li>
             );

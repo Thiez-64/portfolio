@@ -28,13 +28,14 @@ export default async function handler(
         where: { id },
         data: { language, logo },
       });
-      return res.status(204).json(putLanguage);
+      return res.status(204);
     }
     if (req.method === "DELETE") {
       // delete one language
       const deleteLanguage = await prisma.language.delete({
         where: { id },
       });
+      return res.status(204);
     }
   } catch (error) {
     next(error);
