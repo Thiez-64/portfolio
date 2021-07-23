@@ -87,22 +87,27 @@ export default function Hobbies({
           <ul>
             {ints.map((interest, index) => {
               return (
-                <li key={interest.id}>
-                  {interest.logo ? (
-                    <Image
-                      src={interest.logo}
-                      alt="logo"
-                      width={225 / 5}
-                      height={150 / 5}
-                    />
-                  ) : (
-                    <Image
-                      src="/placeholder.svg"
-                      alt="placeholder"
-                      width={60}
-                      height={60}
-                    />
-                  )}
+                <li key={interest.id} className="text-base">
+                  <div className="flex items-center">
+                    <div className="m-1">
+                      {interest.logo ? (
+                        <Image
+                          src={interest.logo}
+                          alt="logo"
+                          width={225}
+                          height={150}
+                        />
+                      ) : (
+                        <Image
+                          src="/placeholder.svg"
+                          alt="placeholder"
+                          width={60}
+                          height={60}
+                        />
+                      )}
+                    </div>
+                    <p>{interest.interest}</p>
+                  </div>
                 </li>
               );
             })}

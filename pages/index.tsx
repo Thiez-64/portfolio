@@ -12,22 +12,12 @@ type InputLanguage = {
   logo: string;
 };
 
-type InputInterest = {
-  interest: string;
-  logo: string;
-};
-
 export default function Home({
   languages,
-}: InferGetStaticPropsType<
-  typeof getStaticProps
->): // { interests }: InferGetStaticPropsType<typeof getStaticPropsI>
-JSX.Element {
+}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   const [langs, setLangs] = useState(languages);
 
   console.log(langs, setLangs);
-
-  // const [ints, setInts] = useState(interests);
 
   const {
     register,
@@ -80,7 +70,7 @@ JSX.Element {
         "Content-Type": "application/json",
       },
     })
-      // .then((response) => response.json())
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
 
@@ -172,13 +162,3 @@ export const getStaticProps: GetStaticProps<{ languages: Language[] }> = async (
     props: { languages },
   };
 };
-
-// export const getStaticPropsI: GetStaticProps<{ interests: Interest[] }> =
-//   async (context) => {
-//     const interests = await fetch("http://localhost:3000/api/interests").then(
-//       (res) => res.json()
-//     );
-//     return {
-//       props: { interests },
-//     };
-//   };

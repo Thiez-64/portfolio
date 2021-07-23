@@ -31,12 +31,12 @@ model Experience{
 
 model Education{
   id String @id @default(uuid())
-  year DateTime
+  year String
   school String
   education String
   description String
-  beginDate DateTime
-  finishDate DateTime
+  beginDate String
+  finishDate String
   logo String
 }
 
