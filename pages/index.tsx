@@ -16,9 +16,6 @@ export default function Home({
   languages,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   const [langs, setLangs] = useState(languages);
-
-  console.log(langs, setLangs);
-
   const {
     register,
     handleSubmit,

@@ -3,9 +3,6 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import DeleteButton from "../components/deletebutton";
-import EditButton from "../components/editbutton";
-import Slider from "../components/slider";
 
 type InputEducation = {
   year: string;
@@ -41,47 +38,12 @@ export default function EducationSkill({
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        setEducs((prev) => [...prev, data]);
+        // setEducs((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
-
-  const Edit = async (data) => {
-    await fetch("http://localhost:3000/api/educations", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        setEducs((prev) => [...prev, data]);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  const Cancel = async (data) => {
-    await fetch("http://localhost:3000/api/educations", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      // .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-
-        setEducs((prev) => [...prev]);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    console.log(data);
   };
 
   return (
@@ -90,7 +52,7 @@ export default function EducationSkill({
         <div className="font-bold items-center text-xl">
           <h2>Educations</h2>
           <ul>
-            {educs.map((education, index) => {
+            {educations.map((education, index) => {
               return (
                 <li key={education.id} className="text-base">
                   <div className="flex items-center">
@@ -111,7 +73,7 @@ export default function EducationSkill({
                         />
                       )}
                     </div>
-                    <span>{education.year}</span>
+                    <p>{education.year}</p>
                     <p>{education.education}</p>
                     <p>{education.school}</p>
                     <p>{education.description}</p>
@@ -123,7 +85,7 @@ export default function EducationSkill({
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex items-center w-screen"
+            className="flex items-center flex-wrap"
           >
             {/* register your input into the hook by invoking the "register" function */}
             <div>
@@ -149,6 +111,7 @@ export default function EducationSkill({
                 {...register("school", { required: true })}
               />
             </div>
+            {/* include validation with required or other standard HTML validation rules */}
             <div>
               <input
                 className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
