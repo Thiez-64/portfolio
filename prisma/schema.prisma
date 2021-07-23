@@ -16,7 +16,7 @@ model Stack {
   logo String
 }
 
-model Experience{
+model Experience {
   id String @id @default(uuid())
   year DateTime
   job String
@@ -29,7 +29,7 @@ model Experience{
   logo String
 }
 
-model Education{
+model Education {
   id String @id @default(uuid())
   year String
   school String
