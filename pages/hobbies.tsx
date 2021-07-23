@@ -1,4 +1,4 @@
-import { Language, Interest } from "@prisma/client";
+import { Interest } from "@prisma/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -7,38 +7,26 @@ import DeleteButton from "../components/deletebutton";
 import EditButton from "../components/editbutton";
 import Slider from "../components/slider";
 
-type InputLanguage = {
-  language: string;
-  logo: string;
-};
-
 type InputInterest = {
   interest: string;
   logo: string;
 };
 
-export default function Home({
-  languages,
-}: InferGetStaticPropsType<
-  typeof getStaticProps
->): // { interests }: InferGetStaticPropsType<typeof getStaticPropsI>
-JSX.Element {
-  const [langs, setLangs] = useState(languages);
-
-  console.log(langs, setLangs);
-
-  // const [ints, setInts] = useState(interests);
+export default function Hobbies({
+  interests,
+}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+  const [ints, setInts] = useState(interests);
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<InputLanguage>();
+  } = useForm<InputInterest>();
 
-  const onSubmit: SubmitHandler<InputLanguage> = async (data) => {
+  const onSubmit: SubmitHandler<InputInterest> = async (data) => {
     console.log(data);
-    await fetch("http://localhost:3000/api/languages", {
+    await fetch("http://localhost:3000/api/interests", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +36,7 @@ JSX.Element {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        setLangs((prev) => [...prev, data]);
+        setInts((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -56,7 +44,7 @@ JSX.Element {
   };
 
   const Edit = async (data) => {
-    await fetch("http://localhost:3000/api/languages", {
+    await fetch("http://localhost:3000/api/interests", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +54,7 @@ JSX.Element {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        setLangs((prev) => [...prev, data]);
+        setInts((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -74,7 +62,7 @@ JSX.Element {
   };
 
   const Cancel = async (data) => {
-    await fetch("http://localhost:3000/api/languages", {
+    await fetch("http://localhost:3000/api/interests", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +72,7 @@ JSX.Element {
       .then((data) => {
         console.log(data);
 
-        setLangs((prev) => [...prev]);
+        setInts((prev) => [...prev]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -93,49 +81,40 @@ JSX.Element {
 
   return (
     <div>
-      <div>
-        <Slider />
-      </div>
       <div className="flex">
         <div className="font-bold items-center text-xl">
-          <h2>Languages</h2>
+          <h2>Hobbies and Interests</h2>
           <ul>
-            {langs.map((language, index) => {
+            {ints.map((interest, index) => {
               return (
-                <li key={language.id} className="text-base">
-                  <div className="flex items-center">
-                    <div className="m-1">
-                      {language.logo ? (
-                        <Image
-                          src={language.logo}
-                          alt="logo"
-                          width={225 / 5}
-                          height={150 / 5}
-                        />
-                      ) : (
-                        <Image
-                          src="/placeholder.svg"
-                          alt="placeholder"
-                          width={60}
-                          height={60}
-                        />
-                      )}
-                    </div>
-                    <p>{language.language}</p>
-                    <EditButton onClick={Edit} />
-                    <DeleteButton onClick={Cancel} />
-                  </div>
+                <li key={interest.id}>
+                  {interest.logo ? (
+                    <Image
+                      src={interest.logo}
+                      alt="logo"
+                      width={225 / 5}
+                      height={150 / 5}
+                    />
+                  ) : (
+                    <Image
+                      src="/placeholder.svg"
+                      alt="placeholder"
+                      width={60}
+                      height={60}
+                    />
+                  )}
                 </li>
               );
             })}
           </ul>
+
           <form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
             {/* register your input into the hook by invoking the "register" function */}
             <div>
               <input
                 className="bg-gray-200 text-gray-400 italic text-center border-1 border-black rounded-md"
-                defaultValue="Language ?"
-                {...register("language", { required: true })}
+                defaultValue="Hobby ?"
+                {...register("interest", { required: true })}
               />
             </div>
 
@@ -147,7 +126,7 @@ JSX.Element {
                 {...register("logo")}
               />
               {/* errors will return when field validation fails  */}
-              {errors.language && <span>This field is required</span>}
+              {errors.interest && <span>This field is required</span>}
             </div>
             <div>
               <input
@@ -162,23 +141,13 @@ JSX.Element {
   );
 }
 
-export const getStaticProps: GetStaticProps<{ languages: Language[] }> = async (
+export const getStaticProps: GetStaticProps<{ interests: Interest[] }> = async (
   context
 ) => {
-  const languages = await fetch("http://localhost:3000/api/languages").then(
+  const interests = await fetch("http://localhost:3000/api/interests").then(
     (res) => res.json()
   );
   return {
-    props: { languages },
+    props: { interests },
   };
 };
-
-// export const getStaticPropsI: GetStaticProps<{ interests: Interest[] }> =
-//   async (context) => {
-//     const interests = await fetch("http://localhost:3000/api/interests").then(
-//       (res) => res.json()
-//     );
-//     return {
-//       props: { interests },
-//     };
-//   };

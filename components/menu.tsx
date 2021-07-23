@@ -24,6 +24,11 @@ export default function Menu() {
             <Link href="/education">Educations</Link>
           </a>
         </li>
+        <li>
+          <a>
+            <Link href="/hobbies">Hobbies and Interests</Link>
+          </a>
+        </li>
       </ul>
     </div>
   );

@@ -35,6 +35,7 @@ export default async function handler(
       const deleteInterest = await prisma.interest.delete({
         where: { id },
       });
+      return res.status(204);
     }
   } catch (error) {
     next(error);

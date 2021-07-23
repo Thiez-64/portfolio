@@ -45,7 +45,7 @@ export default function DevStack({
     <div className="font-bold items-center text-xl">
       <h2>Web Skills</h2>
       <ul>
-        {stacks.map((stack, index) => {
+        {devStacks.map((stack, index) => {
           return (
             <li key={stack.id}>
               <div className="flex items-center">

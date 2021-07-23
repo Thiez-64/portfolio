@@ -26,7 +26,7 @@ export default function NavBar(): JSX.Element {
         </button>
       </div>
       <div className="w-10/12 text-white justify-center flex">
-        <h1>Matthieu O’Jeanson, Web and Mobile Applications Developer</h1>
+        <h1>Web and Mobile Applications Developer</h1>
       </div>
       <div className="w-1/12 items-center">
         <DarkModeToggle />
