@@ -38,7 +38,7 @@ export default function EducationSkill({
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        // setEducs((prev) => [...prev, data]);
+        setEducs((prev) => [...prev, data]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -52,7 +52,7 @@ export default function EducationSkill({
         <div className="font-bold items-center text-xl">
           <h2>Educations</h2>
           <ul>
-            {educations.map((education, index) => {
+            {educs.map((education, index) => {
               return (
                 <li key={education.id} className="text-base">
                   <div className="flex items-center">

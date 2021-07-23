@@ -1,4 +1,4 @@
-import { Language, Interest } from "@prisma/client";
+import { Language } from "@prisma/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import React, { useState } from "react";
